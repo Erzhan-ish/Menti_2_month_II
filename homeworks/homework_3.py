@@ -9,8 +9,9 @@ class Person:
 
     @property
     def age(self):
-        birth = datetime.strptime(self.__birth_date, "%d.%m.%Y")
+        birth = datetime.strptime(self.__birth_date, "%d.%m.%Y")  # превращаем строку в дату рождения
         today = datetime.now()
+        # вычисляем возраст (год сейчас - год рождения, корректируем если день рождения ещё не был в этом году)
         age = today.year - birth.year - ((today.month, today.day) < (birth.month, birth.day))
         return age
 
@@ -26,12 +27,13 @@ class Person:
               f"Я работаю {self.__occupation.lower()}ом, у меня {education}.")
 
 
-class Friend(Person):
+class Friend(Person):   # создаём класс Friend (друг), наследуется от Person
     def __init__(self, name, birth_date, occupation, higher_education, hobby):
-        super().__init__(name, birth_date, occupation, higher_education)
-        self.hobby = hobby
+        # конструктор наследует поля от Person и добавляет своё
+        super().__init__(name, birth_date, occupation, higher_education)  # инициализация Person
+        self.hobby = hobby   # новое поле — хобби
 
-    def introduce(self):
+    def introduce(self):   # переопределяем метод "представиться"
         education = "есть высшее образование" if self.has_higher_education() else "нет высшего образования"
         print(f"Привет, меня зовут {self.name}, я друг Игоря, "
               f"работаю {self.get_occupation().lower()}ом, мое хобби — {self.hobby}, у меня {education}.")
